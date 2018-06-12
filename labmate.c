@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <search.h>
 #include <unistd.h>
+#include <assert.h>
 #define MAX_STUDENTS	100
 
 
@@ -22,6 +23,7 @@ int read_student_list()
 	int i ; 
 
 	fp = fopen("students.txt", "r") ; //TODO: allow a user can give a different file name as an argument.
+	assert(fp!=NULL);
 	while (feof(fp) == 0) {
 		if (fscanf(fp, "%d", &(students[n_students])) == 1)
 			n_students++ ;
