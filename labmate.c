@@ -21,7 +21,8 @@ int read_student_list()
 	char * b ;
 	int i ; 
 
-	fp = fopen("students.txt", "r") ; //TODO: allow a user can give a different file name as an argument.
+
+	fp = fopen("student.txt", "r") ; //TODO: allow a user can give a different file name as an argument.
 	while (feof(fp) == 0) {
 		if (fscanf(fp, "%d", &(students[n_students])) == 1)
 			n_students++ ;
@@ -52,9 +53,13 @@ void read_conflict(char * fname)
 	char * b = NULL ;
 	size_t n = 0 ;
 
-
 	fp = fopen(fname, "r") ;  // TODO: handle file errors
 	
+	if(fp==NULL){
+		printf("File Opening error. File doesn't exist.");
+		return -1
+	}
+
 	while (getline(&b, &n, fp) > 0) {
 		int n_members ;
 		int m1, m2, m3;
@@ -85,6 +90,8 @@ void read_conflict(char * fname)
 			conflict[i3][i2] = 1 ;
 		}
 	}
+	
+	fclose(fp);
 	//TODO: check if the given information is valid.
 }
 
@@ -169,6 +176,7 @@ void main(int argc, char ** argv)
 	char c ; 
 	char * fconflict = NULL ;
 
+
 	while ((c = getopt(argc, argv, "hp:")) != -1) {
 		switch (c) {
 			case 'p':
@@ -186,7 +194,7 @@ void main(int argc, char ** argv)
 				exit(1) ;
 		}
 	}
-
+	
 	read_student_list() ;
 	if (fconflict != NULL)
 		read_conflict(fconflict) ;
