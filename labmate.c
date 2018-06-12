@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <search.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
 #define MAX_STUDENTS	100
 
 
@@ -24,7 +26,7 @@ int read_student_list()
 	
 	printf("Insert the name of the file to read:\n");
 	scanf("%s", filename);
-	fp = fopen(filename, "r") ; //allow a user can give a different file name as an argument.
+	fp = fopen(filename, "r") ; // DONE : allow a user can give a different file name as an argument.
 	while (feof(fp) == 0) {
 		if (fscanf(fp, "%d", &(students[n_students])) == 1)
 			n_students++ ;
@@ -56,7 +58,12 @@ void read_conflict(char * fname)
 	size_t n = 0 ;
 
 
-	fp = fopen(fname, "r") ;  // TODO: handle file errors
+	fp = fopen(fname, "r") ;  
+	
+	if (fp == NULL){ // DONE : handle file errors
+		printf("Error: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
 	
 	while (getline(&b, &n, fp) > 0) {
 		int n_members ;
