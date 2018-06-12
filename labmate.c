@@ -4,7 +4,7 @@
 #include <search.h>
 #include <unistd.h>
 #define MAX_STUDENTS	100
-
+#include <string.h>
 
 //TODO: please someone write a build script.
 
@@ -15,13 +15,15 @@ int team[MAX_STUDENTS] ;
 int n_team_members[MAX_STUDENTS / 2] ;
 int conflict[MAX_STUDENTS][MAX_STUDENTS] ;
 
+char filename[30];
+
 int read_student_list() 
 {
 	FILE * fp ;
 	char * b ;
 	int i ; 
 
-	fp = fopen("students.txt", "r") ; //TODO: allow a user can give a different file name as an argument.
+	fp = fopen(filename, "r") ; //TODO: allow a user can give a different file name as an argument.
 	while (feof(fp) == 0) {
 		if (fscanf(fp, "%d", &(students[n_students])) == 1)
 			n_students++ ;
@@ -166,6 +168,7 @@ void print_team_assignment()
 
 void main(int argc, char ** argv) 
 {	
+	strcpy(filename, argv[1]);
 	char c ; 
 	char * fconflict = NULL ;
 
