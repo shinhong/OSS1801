@@ -51,7 +51,7 @@ void read_conflict(char * fname)
 	FILE * fp ;
 	char * b = NULL ;
 	size_t n = 0 ;
-
+	int line = 0 ;
 
 	fp = fopen(fname, "r") ;  // TODO: handle file errors
 	
@@ -62,9 +62,10 @@ void read_conflict(char * fname)
 
 		n_members = sscanf(b, "%d %d %d", &m1, &m2, &m3) ;
 		free(b) ;
+		line++ ;
 
 		if (n_members <= 1) {
-			fprintf(stderr, "Wrong input") ; //TODO: need a better error message.
+			fprintf(stderr, "In file %s, each line have to contain at least two students.\nError on line %d\n", fname, line) ; //TODO: need a better error message.
 			exit(1) ;
 		}
 
