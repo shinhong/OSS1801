@@ -10,7 +10,7 @@
 
 int n_students = 0 ;
 int n_teams = 0 ;
-int students[MAX_STUDENTS] ;	// TODO: allow an arbitrary number of students can come from the input.
+int students[MAX_STUDENTS] ;	// TODO: allow an arbitrary number of students can come from the input. -> argc
 int team[MAX_STUDENTS] ;
 int n_team_members[MAX_STUDENTS / 2] ;
 int conflict[MAX_STUDENTS][MAX_STUDENTS] ;
@@ -21,7 +21,14 @@ int read_student_list()
 	char * b ;
 	int i ; 
 
-	fp = fopen("students.txt", "r") ; //TODO: allow a user can give a different file name as an argument.
+	//TODO: allow a user can give a different file name as an arguments.
+	//if(argc > 1){
+	//	fp = fopen(argv,"r");
+	//}
+	//else{
+	fp = fopen("students.txt", "r") ;
+	//}
+
 	while (feof(fp) == 0) {
 		if (fscanf(fp, "%d", &(students[n_students])) == 1)
 			n_students++ ;
@@ -33,7 +40,8 @@ int read_student_list()
 	for (i = 0 ; i < n_students ; i++) 
 		conflict[i][i] = 0 ;
 
-	// TODO: check if a given student ID is valid.
+	// TODO: check if a given student ID is valid.  conflict 활용 
+	
 }
 
 int get_student_index(int id) 
@@ -54,17 +62,20 @@ void read_conflict(char * fname)
 
 
 	fp = fopen(fname, "r") ;  // TODO: handle file errors
-	
+	if(fp = NULL){
+		fprintf(stderr,"there is no file : %s\n",fname);
+	}
 	while (getline(&b, &n, fp) > 0) {
 		int n_members ;
 		int m1, m2, m3;
 		int i1, i2, i3 ;
 
 		n_members = sscanf(b, "%d %d %d", &m1, &m2, &m3) ;
-		free(b) ;
+		free(b) ;	//???
 
 		if (n_members <= 1) {
-			fprintf(stderr, "Wrong input") ; //TODO: need a better error message.
+			//fprintf(stderr, "Wrong input") ; //TODO: need a better error message.
+			fprintf(stderr, "There is so few members input\n");
 			exit(1) ;
 		}
 
