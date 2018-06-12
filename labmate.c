@@ -14,14 +14,16 @@ int students[MAX_STUDENTS] ;	// TODO: allow an arbitrary number of students can 
 int team[MAX_STUDENTS] ;
 int n_team_members[MAX_STUDENTS / 2] ;
 int conflict[MAX_STUDENTS][MAX_STUDENTS] ;
+extern char *optarg;
 
-int read_student_list() 
+
+int read_student_list(char * fname) 
 {
 	FILE * fp ;
 	char * b ;
 	int i ; 
 
-	fp = fopen("students.txt", "r") ; //TODO: allow a user can give a different file name as an argument.
+	fp = fopen(fname, "r") ; //TODO: allow a user can give a different file name as an argument.
 	while (feof(fp) == 0) {
 		if (fscanf(fp, "%d", &(students[n_students])) == 1)
 			n_students++ ;
@@ -168,8 +170,9 @@ void main(int argc, char ** argv)
 {	
 	char c ; 
 	char * fconflict = NULL ;
+	char * stu_filename = NULL ;
 
-	while ((c = getopt(argc, argv, "hp:")) != -1) {
+	while ((c = getopt(argc, argv, "hp:r:")) != -1) {
 		switch (c) {
 			case 'p':
 				fconflict = optarg ;
@@ -180,6 +183,10 @@ void main(int argc, char ** argv)
 				// Please someone make a help message here.
 				break ;
 
+			case 'r':
+				stu_filename = optarg ;
+				break ;
+
 			default:
 				fprintf(stderr, "Invalid argument\n") ; 
 				// Please someone make a better error message.
@@ -187,7 +194,7 @@ void main(int argc, char ** argv)
 		}
 	}
 
-	read_student_list() ;
+	read_student_list(stu_filename) ;
 	if (fconflict != NULL)
 		read_conflict(fconflict) ;
 	find_team_assignments() ;
