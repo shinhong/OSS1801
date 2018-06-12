@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <search.h>
 #include <unistd.h>
-#define MAX_STUDENTS	100
-
+#define MAX_STUDENT 100
+ 
 
 //TODO: please someone write a build script.
 
@@ -14,7 +14,7 @@ int students[MAX_STUDENTS] ;	// TODO: allow an arbitrary number of students can 
 int team[MAX_STUDENTS] ;
 int n_team_members[MAX_STUDENTS / 2] ;
 int conflict[MAX_STUDENTS][MAX_STUDENTS] ;
-
+ 
 int read_student_list() 
 {
 	FILE * fp ;
@@ -64,7 +64,7 @@ void read_conflict(char * fname)
 		free(b) ;
 
 		if (n_members <= 1) {
-			fprintf(stderr, "Wrong input") ; //TODO: need a better error message.
+			fprintf(stderr, "IN INPUT FILE : One line needs to have two student id, please input more members\n") ;
 			exit(1) ;
 		}
 
