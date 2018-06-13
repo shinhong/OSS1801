@@ -64,7 +64,7 @@ void read_conflict(char * fname)
 		free(b) ;
 
 		if (n_members <= 1) {
-			fprintf(stderr, "Wrong input") ; //TODO: need a better error message.
+			fprintf(stderr, "Please enter numbers greater than 1 ") ; // jeong seop wrote a better error message.
 			exit(1) ;
 		}
 
