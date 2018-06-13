@@ -3,8 +3,10 @@
 #include <stdlib.h>
 #include <search.h>
 #include <unistd.h>
+#include <string.h>
 #define MAX_STUDENTS	100
-
+#define STUDENTS_ID_DIGIT 8
+#define MAX_BUF	128
 
 //TODO: please someone write a build script.
 
@@ -34,6 +36,30 @@ int read_student_list()
 		conflict[i][i] = 0 ;
 
 	// TODO: check if a given student ID is valid.
+	/*
+	1) checks if input ids have valid number of digits, which is 8 digits
+	2) checks if input ids start with 2
+	*/
+	b = (char*)calloc(sizeof(char), MAX_BUF) ;
+
+	for(i = 0 ; i < n_students ; i++) {
+		sprintf(b, "%d", students[i]) ;
+		
+		//check if first digit is 2
+		if(b[0]!='2') {
+			printf("invalid student ID : %s\n", b) ;
+			printf("first digit must be 2\n") ;
+			exit(-1) ;
+		}
+
+		//check it number of digit is equal to STUDENT_ID_DIGIT
+		if(strlen(b) != STUDENTS_ID_DIGIT){
+			printf("invalid student ID : %s\n", b) ;
+			printf("ID must be 8 digit integer\n") ;
+			exit(-1) ;
+		}
+	}
+	free(b) ;
 }
 
 int get_student_index(int id) 
