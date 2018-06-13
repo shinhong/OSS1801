@@ -7,10 +7,22 @@
 
 
 //TODO: please someone write a build script.
+//gcc -o finalHW labmate.c.new 
 
 int n_students = 0 ;
 int n_teams = 0 ;
+//my code
+//int argc_global = 0;
+//char *argv_global=NULL;
+
+#ifdef	argv
+	#define MAX_STUDENTS = argv;
+#else
+	#define MAX_STDUENTS = 100;
+#endif
+
 int students[MAX_STUDENTS] ;	// TODO: allow an arbitrary number of students can come from the input. -> argc
+
 int team[MAX_STUDENTS] ;
 int n_team_members[MAX_STUDENTS / 2] ;
 int conflict[MAX_STUDENTS][MAX_STUDENTS] ;
@@ -22,12 +34,13 @@ int read_student_list()
 	int i ; 
 
 	//TODO: allow a user can give a different file name as an arguments.
-	//if(argc > 1){
-	//	fp = fopen(argv,"r");
+	//if(argc_global > 1){
+	//	fp = fopen(argv_global,"r");
 	//}
 	//else{
-	fp = fopen("students.txt", "r") ;
+		fp = fopen("students.txt", "r") ;
 	//}
+	//
 
 	while (feof(fp) == 0) {
 		if (fscanf(fp, "%d", &(students[n_students])) == 1)
@@ -64,6 +77,7 @@ void read_conflict(char * fname)
 	fp = fopen(fname, "r") ;  // TODO: handle file errors
 	if(fp = NULL){
 		fprintf(stderr,"there is no file : %s\n",fname);
+		exit(1);
 	}
 	while (getline(&b, &n, fp) > 0) {
 		int n_members ;
@@ -180,6 +194,10 @@ void main(int argc, char ** argv)
 	char c ; 
 	char * fconflict = NULL ;
 
+	//my code
+	//argc_global=argc;
+	//argv_global=*argv;
+
 	while ((c = getopt(argc, argv, "hp:")) != -1) {
 		switch (c) {
 			case 'p':
@@ -189,6 +207,10 @@ void main(int argc, char ** argv)
 			case 'h':
 				printf("Help. I need somebody.\n") ;
 				// Please someone make a help message here.
+				printf("this is program that make team\n");
+				printf("if you input a file, then it makes team automatically\n");
+				printf("you can input a number of team, and file name that use\n");
+				exit(1);
 				break ;
 
 			default:
