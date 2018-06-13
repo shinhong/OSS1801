@@ -53,8 +53,10 @@ void read_conflict(char * fname)
 	size_t n = 0 ;
 
 
-	fp = fopen(fname, "r") ;  // TODO: handle file errors
-	
+	if((fp = fopen(fname, "r")) == NULL) {  // TODO: handle file errors
+		printf("Failed to open file \n");
+		exit(-1);
+		}
 	while (getline(&b, &n, fp) > 0) {
 		int n_members ;
 		int m1, m2, m3;
